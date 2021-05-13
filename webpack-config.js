@@ -4,10 +4,14 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: {
+    index: './src/index.js',
+    print: './src/print.js',
+  },
   output: {
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
+    clean: true,
   },
 
   module: {
@@ -43,7 +47,9 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
-    new HtmlWebPackPlugin(),
+    new HtmlWebPackPlugin({
+      title: 'Output Management',
+    }),
   ],
 
   optimization: {
