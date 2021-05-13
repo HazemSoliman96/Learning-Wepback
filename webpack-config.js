@@ -2,7 +2,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const Visualizer = require('webpack-visualizer-plugin');
+// Visualizer = require('webpack-visualizer-plugin');
 
 module.exports = {
   mode: 'development',
@@ -10,17 +10,18 @@ module.exports = {
   devServer: {
     contentBase: './dist',
   },
-  entry: {
-    index: {
-      import: './src/index.js',
-      dependOn: 'shared',
-    },
-    print: {
-      import: './src/print.js',
-      dependOn: 'shared',
-    },
-    shared: 'lodash',
-  },
+  entry: './src/index.js',
+  // entry: {
+  //   index: {
+  //     import: './src/index.js',
+  //     dependOn: 'shared',
+  //   },
+  //   print: {
+  //     import: './src/print.js',
+  //     dependOn: 'shared',
+  //   },
+  //   shared: 'lodash',
+  // },
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
@@ -63,11 +64,12 @@ module.exports = {
     new HtmlWebPackPlugin({
       title: 'Development',
     }),
-    new Visualizer(),
+    //new Visualizer(),
   ],
 
   optimization: {
     minimize: true,
+    usedExports: true,
     minimizer: [
       `...`,
       new CssMinimizerPlugin(),
