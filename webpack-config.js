@@ -2,11 +2,24 @@ const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const Visualizer = require('webpack-visualizer-plugin');
 
 module.exports = {
+  mode: 'development',
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './dist',
+  },
   entry: {
-    index: './src/index.js',
-    print: './src/print.js',
+    index: {
+      import: './src/index.js',
+      dependOn: 'shared',
+    },
+    print: {
+      import: './src/print.js',
+      dependOn: 'shared',
+    },
+    shared: 'lodash',
   },
   output: {
     filename: "[name].bundle.js",
@@ -48,8 +61,9 @@ module.exports = {
       chunkFilename: "[id].css",
     }),
     new HtmlWebPackPlugin({
-      title: 'Output Management',
+      title: 'Development',
     }),
+    new Visualizer(),
   ],
 
   optimization: {
@@ -58,5 +72,9 @@ module.exports = {
       `...`,
       new CssMinimizerPlugin(),
     ],
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+    },
   },
 };
