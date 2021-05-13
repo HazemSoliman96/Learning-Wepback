@@ -1,6 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: "./src/index.js",
@@ -34,6 +35,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        use: 'asset/resource',
+      },
     ],
   },
 
@@ -42,6 +47,7 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
+    new HtmlWebPackPlugin(),
   ],
 
   optimization: {
